@@ -2,16 +2,16 @@ package routes
 
 import (
 	"fmt"
-	"github.com/mattn/go-colorable"
 )
 
 import (
-	controller "github.com/psyonly/FishersInSDV/controller/index"
+	home "github.com/psyonly/FishersInSDV/controller/index"
+	"github.com/psyonly/FishersInSDV/settings"
 )
 
 import (
 	"github.com/gin-gonic/gin"
-	_ "github.com/mattn/go-colorable"
+	"github.com/mattn/go-colorable"
 )
 
 var (
@@ -27,10 +27,11 @@ func InitRoute() error {
 	// 初始化engine
 	engine = gin.Default()
 	// 路由注册
-	engine.GET("/", controller.EntryPage)
+	engine.GET("/", home.EntryPage)
+	engine.GET("/version", home.GetVersion)
 
 	// 启动路由监听请求并回应
-	err := engine.Run(":9876")
+	err := engine.Run(fmt.Sprintf(":%d", settings.Conf.Port))
 	if err != nil {
 		fmt.Println(err)
 		return err
