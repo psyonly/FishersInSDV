@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            index
+        </title>
+        <script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <button @click="getFishes()">Get Fish List</button>
+            <ul>
+                <li v-for="fish in fishes">
+                    {{fish}}
+                </li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            var app = new Vue({
+                el: "#app",
+                data: {
+                    fishes: []
+                },
+                methods: {
+                    getFishes() {
+                        axios.get("http://localhost:9876/fishes").then(res=>{
+                            console.log("get success")
+                            console.log(res.data)
+                            this.fishes = res.data
+                        }).catch(err=>{
+                            console.log("bugs")
+                        })
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

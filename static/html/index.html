@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            index
+        </title>
+        <script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+        <div id="app">
+            <p>
+                Willy's Shop
+                <br/>
+                <input type="checkbox" @change="handleCheckAll()" v-model="checkAll">
+                <ul>
+                    <li v-for="data in fishes">
+                        <input type="checkbox" :value="data" v-model="fishGroup" @change="handleChange">
+                        {{data}}
+                        <button @click="handleAdd(data)">Add</button>
+                        <button @click="handleSub(data)">Sub</button>
+                    </li>
+                </ul>
+                {{ fishGroup }}
+                <p>
+                    total price
+                    {{ getSum() }}
+                </p>
+            </p>
+        </div>
+        <script type="text/javascript">
+            var app = new Vue({
+                el: "#app",
+                data: {
+                    checkAll: false,
+                    fishGroup: [],
+                    fishes: [
+                        {
+                            name: "Anchovy",
+                            price: 35,
+                            region: "beach",
+                            count: 2,
+                        },
+                        {
+                            name: "Dorado",
+                            price: 160,
+                            region: "coal wood",
+                            count: 1,
+                        },
+                        {
+                            name: "Tuna",
+                            price: 80,
+                            region: "sea",
+                            count: 1,
+                        }
+                    ]
+                },
+                methods: {
+                    getSum() {
+                        var sum = 0; 
+                        for(var i in this.fishGroup) {
+                            sum += this.fishGroup[i].price * this.fishGroup[i].count; 
+                        }
+                        return sum; 
+                    },
+                    handleCheckAll() {
+                        if(this.checkAll) {
+                            this.fishGroup = this.fishes
+                        } else {
+                            this.fishGroup = []
+                        }
+                    },
+                    handleChange() {
+                        if(this.fishGroup.length === this.fishes.length) {
+                            this.checkAll = true
+                        } else {
+                            this.checkAll = false
+                        }
+                    },
+                    handleAdd(data) {
+                        data.count++
+                    },
+                    handleSub(data) {
+                        if(data.count>0){
+                            data.count--
+                        }
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -27,8 +27,14 @@ func InitRoute() error {
 	// 初始化engine
 	engine = gin.Default()
 	// 路由注册
-	engine.GET("/", home.EntryPage)
-	engine.GET("/version", home.GetVersion)
+	apiGroup := engine.Group("/api")
+	{
+		apiGroup.GET("/", home.EntryPage)
+
+		apiGroup.GET("/version", home.GetVersion)
+
+		apiGroup.GET("/fishes", home.GetFishes)
+	}
 
 	// 启动路由监听请求并回应
 	err := engine.Run(fmt.Sprintf(":%d", settings.Conf.Port))
