@@ -1,0 +1,11 @@
+# bin service file
+./fish
+
+# gomod files
+go.sum
+
+# config files
+config.yaml
+
+# running files
+/logs
